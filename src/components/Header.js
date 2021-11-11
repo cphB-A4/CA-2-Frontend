@@ -1,8 +1,9 @@
 import { NavLink, Route } from "react-router-dom";
 
-function Header() {
+function Header({ loggedIn }) {
   return (
     <ul className="header">
+      {console.log(loggedIn)}
       <li>
         <NavLink exact activeClassName="active" to="/">
           Home
