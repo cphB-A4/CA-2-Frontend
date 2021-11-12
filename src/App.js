@@ -15,34 +15,10 @@ import {
 import Home from "./components/Home";
 import Login from "./components/Login";
 import FetchSingle from "./components/FetchSingle";
+import NoUserHeader from "./components/NoUserHeader";
+import UserHeader from "./components/UserHeader";
 
-function LogIn({ login }) {
-  const init = { username: "", password: "" };
-  const [loginCredentials, setLoginCredentials] = useState(init);
-
-  const performLogin = (evt) => {
-    evt.preventDefault();
-    login(loginCredentials.username, loginCredentials.password);
-  };
-  const onChange = (evt) => {
-    setLoginCredentials({
-      ...loginCredentials,
-      [evt.target.id]: evt.target.value,
-    });
-  };
-
-  return (
-    <div>
-      <h2>Login</h2>
-      <form onChange={onChange}>
-        <input placeholder="User Name" id="username" />
-        <input placeholder="Password" id="password" />
-        <button onClick={performLogin}>Login</button>
-      </form>
-    </div>
-  );
-}
-function LoggedIn() {
+/*function LoggedIn() {
   const [dataFromServer, setDataFromServer] = useState("Loading...");
   const [errorMsg, setErrorMsg] = useState("All is good");
 
@@ -66,7 +42,7 @@ function LoggedIn() {
       <p>{errorMsg}</p>
     </div>
   );
-}
+}*/
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -81,16 +57,17 @@ function App() {
 
   return (
     <div className="App">
-      <Header loggedIn={loggedIn} />
+      {/* <Header loggedIn={loggedIn} /> */}
+
       {!loggedIn ? (
-        <LogIn login={login} />
+        <NoUserHeader loggedIn={loggedIn} login={login} />
       ) : (
         <div>
-          <LoggedIn />
-          <button onClick={logout}>Logout</button>
+          {/* <button onClick={logout}>Logout</button> */}
+          <UserHeader loggedIn={loggedIn} />
         </div>
       )}
-      <Switch>
+      {/* <Switch>
         <Route exact path="/">
           <Home />
         </Route>
@@ -100,7 +77,7 @@ function App() {
         <Route path="/fetch-single">
           <FetchSingle />
         </Route>
-      </Switch>
+      </Switch> */}
     </div>
   );
 }

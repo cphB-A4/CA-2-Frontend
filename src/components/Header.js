@@ -9,11 +9,15 @@ function Header({ loggedIn }) {
           Home
         </NavLink>
       </li>
-      <li>
-        <NavLink exact activeClassName="active" to="/login">
-          login
-        </NavLink>
-      </li>
+      {!loggedIn ? (
+        <li>
+          <NavLink exact activeClassName="active" to="/login">
+            login
+          </NavLink>
+        </li>
+      ) : (
+        ""
+      )}
       <li>
         <NavLink exact activeClassName="active" to="/fetch-single">
           FetchSingle
