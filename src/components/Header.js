@@ -1,6 +1,6 @@
 import { NavLink, Route } from "react-router-dom";
 
-function Header({ loggedIn }) {
+function Header({ loggedIn, logout }) {
   return (
     <ul className="header">
       {console.log(loggedIn)}
@@ -9,20 +9,30 @@ function Header({ loggedIn }) {
           Home
         </NavLink>
       </li>
-      {!loggedIn ? (
-        <li>
-          <NavLink exact activeClassName="active" to="/login">
-            login
-          </NavLink>
-        </li>
-      ) : (
-        ""
-      )}
+
       <li>
         <NavLink exact activeClassName="active" to="/fetch-single">
           FetchSingle
         </NavLink>
       </li>
+      {!loggedIn ? (
+        <li>
+          <NavLink exact activeClassName="active" to="/login">
+            Login
+          </NavLink>
+        </li>
+      ) : (
+        <li>
+          <NavLink
+            exact
+            activeClassName="active"
+            to="/"
+            onClick={() => logout()}
+          >
+            Logout
+          </NavLink>
+        </li>
+      )}
     </ul>
   );
 }

@@ -12,10 +12,10 @@ import Header from "./Header";
 import Home from "./Home";
 
 function UserHeader(props) {
-  const { loggedIn } = props;
+  const { loggedIn, logout } = props;
   return (
     <div>
-      <Header loggedIn={loggedIn} />
+      <Header logout={logout} loggedIn={loggedIn} />
       <Switch>
         <Route exact path="/">
           <Home />

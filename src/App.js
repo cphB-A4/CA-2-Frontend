@@ -55,6 +55,7 @@ function App() {
     facade.login(user, pass).then((res) => setLoggedIn(true));
   };
 
+  //logedInState propdrilling ned til Header component. Lifting state up
   return (
     <div className="App">
       {/* <Header loggedIn={loggedIn} /> */}
@@ -64,7 +65,7 @@ function App() {
       ) : (
         <div>
           {/* <button onClick={logout}>Logout</button> */}
-          <UserHeader loggedIn={loggedIn} />
+          <UserHeader logout={logout} loggedIn={loggedIn} />
         </div>
       )}
       {/* <Switch>
