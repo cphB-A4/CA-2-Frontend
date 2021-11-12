@@ -14,6 +14,11 @@ function Header({ loggedIn }) {
           login
         </NavLink>
       </li>
+      <li>
+        <NavLink exact activeClassName="active" to="/fetch-single">
+          FetchSingle
+        </NavLink>
+      </li>
     </ul>
   );
 }

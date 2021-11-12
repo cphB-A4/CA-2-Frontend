@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import FetchSingle from "./components/FetchSingle";
 
 function LogIn({ login }) {
   const init = { username: "", password: "" };
@@ -95,6 +96,9 @@ function App() {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/fetch-single">
+          <FetchSingle />
         </Route>
       </Switch>
     </div>
