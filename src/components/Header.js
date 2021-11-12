@@ -23,12 +23,8 @@ function Header({ loggedIn, logout }) {
         </li>
       ) : (
         <li>
-          <NavLink
-            exact
-            activeClassName="active"
-            to="/"
-            onClick={() => logout()}
-          >
+          {/*Logout is never active. Once you click you gets to the homepage*/}
+          <NavLink exact activeClassName="none" to="/" onClick={() => logout()}>
             Logout
           </NavLink>
         </li>
