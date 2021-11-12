@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./components/Header";
 import facade from "./apiFacade";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,12 +11,14 @@ import {
   Link,
   useParams,
   NavLink,
+  matchPath,
 } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import FetchSingle from "./components/FetchSingle";
 
-function LogIn({ login }) {
+
+/*function LogIn({ login }) {
   const init = { username: "", password: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);
 
@@ -41,67 +43,100 @@ function LogIn({ login }) {
       </form>
     </div>
   );
-}
-function LoggedIn() {
+}*/
+// function LoggedIn() {
+//   const [dataFromServer, setDataFromServer] = useState("Loading...");
+//   const [errorMsg, setErrorMsg] = useState("All is good");
+
+//   useEffect(() => {
+//     facade
+//       .fetchData()
+//       .then((data) => setDataFromServer(data.msg))
+//       .catch((err) => {
+//         if (err.status) {
+//           err.fullError.then((e) => setErrorMsg(e.code + ": " + e.message));
+//         } else {
+//           console.log("Network error");
+//         }
+//       });
+//   }, []);
+
+//   return (
+//     <div>
+//       <h2>Data Received from server</h2>
+//       <h3>{dataFromServer}</h3>
+//       <p>{errorMsg}</p>
+//     </div>
+//   );
+// }
+
+function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [dataFromServer, setDataFromServer] = useState("Loading...");
   const [errorMsg, setErrorMsg] = useState("All is good");
 
-  useEffect(() => {
-    facade
+  const logout = () => {
+    facade.logout();
+    setLoggedIn(false);
+    setDataFromServer("Logged out!!")
+
+
+
+
+  };
+  const login = (user, pass) => {
+    facade.login(user, pass).then((res) => {
+      facade
       .fetchData()
-      .then((data) => setDataFromServer(data.msg))
+      .then((data) =>{
+        
+        
+        setDataFromServer(data.msg)
+        setLoggedIn(true);
+        setErrorMsg("")
+      }
+      )
       .catch((err) => {
         if (err.status) {
           err.fullError.then((e) => setErrorMsg(e.code + ": " + e.message));
         } else {
           console.log("Network error");
         }
-      });
-  }, []);
+      })
 
-  return (
-    <div>
-      <h2>Data Received from server</h2>
-      <h3>{dataFromServer}</h3>
-      <p>{errorMsg}</p>
-    </div>
-  );
-}
-
-function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const logout = () => {
-    facade.logout();
-    setLoggedIn(false);
-  };
-  const login = (user, pass) => {
-    facade.login(user, pass).then((res) => setLoggedIn(true));
-  };
+    }
+    
+  
+    
+    
+    // setLoggedIn(true));
+    ).catch(err => err.fullError.then((e) => setErrorMsg(e.code + ": " + e.message)))};
 
   return (
     <div className="App">
       <Header loggedIn={loggedIn} />
-      {!loggedIn ? (
-        <LogIn login={login} />
+      {/* {!loggedIn ? (
+        <Login login={login}  />
       ) : (
         <div>
           <LoggedIn />
           <button onClick={logout}>Logout</button>
         </div>
-      )}
+      )} */}
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home/>
         </Route>
         <Route path="/login">
-          <Login />
+          <Login  login={login} facade={facade} loggedIn={loggedIn} logout={logout} dataFromServer={dataFromServer} errorMsg={errorMsg}/>
         </Route>
         <Route path="/fetch-single">
           <FetchSingle />
         </Route>
+      
       </Switch>
     </div>
+  
   );
 }
 
