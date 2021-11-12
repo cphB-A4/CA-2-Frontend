@@ -10,6 +10,7 @@ import {
 import React, { useState, useEffect } from "react";
 import Home from "./Home";
 import Header from "./Header";
+import FetchSingle from "./FetchSingle";
 
 function NoUserHeader(props) {
   const { login, loggedIn } = props;
@@ -44,7 +45,9 @@ function NoUserHeader(props) {
             </form>
           </div>
         </Route>
-        <Route path="/fetch-single">fetchSingle</Route>
+        <Route path="/fetch-single">
+          <FetchSingle />
+        </Route>
       </Switch>
     </div>
   );

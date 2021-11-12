@@ -40,6 +40,12 @@ function apiFacade() {
     const options = makeOptions("GET", true); //True add's the token
     return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
   };
+
+  //Fetches from one endpoint. Only 1 external api call.
+  const fetchSingleData = () => {
+    const options = makeOptions("GET", true); //True add's the token
+    return fetch(URL + "/api/info/fetchSingle", options).then(handleHttpErrors);
+  };
   const makeOptions = (method, addToken, body) => {
     var opts = {
       method: method,
@@ -64,6 +70,7 @@ function apiFacade() {
     login,
     logout,
     fetchData,
+    fetchSingleData,
   };
 }
 const facade = apiFacade();
