@@ -22,12 +22,24 @@ function Header({ loggedIn, logout }) {
           </NavLink>
         </li>
       ) : (
-        <li>
-          {/*Logout is never active. Once you click you gets to the homepage*/}
-          <NavLink exact activeClassName="none" to="/" onClick={() => logout()}>
-            Logout
-          </NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink exact activeClassName="active" to="/fetch-sequentially">
+              Fetch sequentially
+            </NavLink>
+          </li>
+          <li>
+            {/*Logout is never active. Once you click you gets to the homepage*/}
+            <NavLink
+              exact
+              activeClassName="none"
+              to="/"
+              onClick={() => logout()}
+            >
+              Logout
+            </NavLink>
+          </li>
+        </>
       )}
     </ul>
   );

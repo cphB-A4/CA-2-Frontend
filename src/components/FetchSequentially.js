@@ -2,22 +2,16 @@ import facade from "../apiFacade";
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-function FetchSingle() {
+function FetchSequentially() {
   //const intialValue = { fact: "", length: "" };
   const [data, setData] = useState({});
 
-  const getRandomCatFact = () => {
-    facade.fetchSingleData().then((json) => {
+  const getAlotData = () => {
+    facade.fetchAlotData().then((json) => {
       console.log(json);
       setData(json);
     });
   };
-
-  //If you want a catFact right away uncomment this code:
-  /*useEffect(() => {
-    getRandomCatFact();
-  }, []);*/
-
   return (
     <div>
       <Container>
@@ -26,12 +20,12 @@ function FetchSingle() {
             1 of 3
           </Col>
           <Col className="columns text-center">
-            <h1 className="text-center">Get random cat fact API!</h1>
+            <h1 className="text-center">
+              Get a lot of random Facts from 4 API's!
+            </h1>
             <br></br>
-            <h5>{data.fact}</h5>
-            <p>Length of fact: {data.length}</p>
 
-            <button className="btn btn-primary mt-3" onClick={getRandomCatFact}>
+            <button className="btn btn-primary mt-3" onClick={getAlotData}>
               Click me
             </button>
           </Col>
@@ -40,8 +34,9 @@ function FetchSingle() {
           </Col>
         </Row>
       </Container>
+      {console.log(data)}
     </div>
   );
 }
 
-export default FetchSingle;
+export default FetchSequentially;

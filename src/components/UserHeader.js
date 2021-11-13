@@ -10,6 +10,8 @@ import {
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Home from "./Home";
+import FetchSingle from "./FetchSingle";
+import FetchSequentially from "./FetchSequentially";
 
 function UserHeader(props) {
   const { loggedIn, logout } = props;
@@ -20,7 +22,12 @@ function UserHeader(props) {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/fetch-single">fetchSingle</Route>
+        <Route path="/fetch-single">
+          <FetchSingle />
+        </Route>
+        <Route path="/fetch-sequentially">
+          <FetchSequentially />
+        </Route>
       </Switch>
     </div>
   );
