@@ -29,6 +29,11 @@ function Header({ loggedIn, logout }) {
             </NavLink>
           </li>
           <li>
+            <NavLink exact activeClassName="active" to="/fetch-parallelly">
+              Fetch parallelly
+            </NavLink>
+          </li>
+          <li>
             {/*Logout is never active. Once you click you gets to the homepage*/}
             <NavLink
               exact

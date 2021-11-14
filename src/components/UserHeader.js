@@ -12,6 +12,8 @@ import Header from "./Header";
 import Home from "./Home";
 import FetchSingle from "./FetchSingle";
 import FetchSequentially from "./FetchSequentially";
+import FetchParallel from "./FetchParallelly";
+import FetchParallelly from "./FetchParallelly";
 
 function UserHeader(props) {
   const { loggedIn, logout } = props;
@@ -27,6 +29,9 @@ function UserHeader(props) {
         </Route>
         <Route path="/fetch-sequentially">
           <FetchSequentially />
+        </Route>
+        <Route path="/fetch-parallelly">
+          <FetchParallelly />
         </Route>
       </Switch>
     </div>

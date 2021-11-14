@@ -5,6 +5,7 @@ import {
   Link,
   useParams,
   NavLink,
+  useHistory,
 } from "react-router-dom";
 
 import React, { useState, useEffect } from "react";
@@ -17,9 +18,14 @@ function NoUserHeader(props) {
   const init = { username: "", password: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);
 
+  const history = useHistory();
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     login(loginCredentials.username, loginCredentials.password);
+    //redirects user to home page
+    let path = `/`;
+    history.push(path);
   };
   const onChange = (evt) => {
     setLoginCredentials({

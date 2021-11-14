@@ -2,12 +2,12 @@ import facade from "../apiFacade";
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-function FetchSequentially() {
+function FetchParallelly() {
   //const intialValue = { fact: "", length: "" };
   const [data, setData] = useState({});
 
   const getAlotData = () => {
-    facade.fetchAlotData().then((json) => {
+    facade.fetchAlotDataParallel().then((json) => {
       console.log(json);
       setData(json);
     });
@@ -26,7 +26,7 @@ function FetchSequentially() {
           </Col>
           <Col className="columns text-center">
             <h1 className="text-center">
-              Get a lot of random Facts from 4 API's!
+              Get a lot of random Facts from 4 API's parallelly!
             </h1>
             <br></br>
 
@@ -49,4 +49,4 @@ function FetchSequentially() {
   );
 }
 
-export default FetchSequentially;
+export default FetchParallelly;

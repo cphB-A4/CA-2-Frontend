@@ -12,8 +12,8 @@ function Home() {
             <h1 className="text-center">Welcome to dummy API's!</h1>
             <br></br>
             <p>No user: Home, FetchSingle and Login</p>
-            <p>User: Home, FetchParallel and Logout</p>
-            <p>Admin: TBD</p>
+            <p>User: Home, FetchSingle, FetchSequentially and Logout</p>
+            <p>Admin: Home, FetchSingle, FetchParallel and Logout</p>
           </Col>
           <Col xs={2} className="columns">
             3 of 3
