@@ -25,13 +25,6 @@ function NoUserHeader(props) {
     evt.preventDefault();
     login(loginCredentials.username, loginCredentials.password);
     //redirects user to home page
-    console.log(errorMsg);
-    if (errorMsg == null) {
-      console.log("error msg if ? ");
-      let path = `/`;
-      history.push(path);
-    } else {
-    }
   };
   const onChange = (evt) => {
     setLoginCredentials({
@@ -42,6 +35,7 @@ function NoUserHeader(props) {
   return (
     <div>
       NoUserHeader
+      {console.log(errorMsg)}
       <Header loggedIn={loggedIn} />
       <Switch>
         <Route exact path="/">
@@ -55,6 +49,7 @@ function NoUserHeader(props) {
               <input placeholder="Password" id="password" />
               <button onClick={handleSubmit}>Login</button>
             </form>
+            <p>{errorMsg}</p>
           </div>
         </Route>
         <Route path="/fetch-single">

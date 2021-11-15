@@ -12,6 +12,7 @@ import {
   Link,
   useParams,
   NavLink,
+  useHistory,
 } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -48,6 +49,7 @@ import UserHeader from "./components/UserHeader";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const history = useHistory();
 
   const logout = () => {
     facade.logout();
@@ -56,7 +58,12 @@ function App() {
   const login = (user, pass) => {
     facade
       .login(user, pass)
-      .then((res) => setLoggedIn(true))
+      .then((res) => {
+        setLoggedIn(true);
+        setErrorMsg("");
+        const path = `/`;
+        history.push(path);
+      })
       .catch((err) => {
         if (err.status) {
           err.fullError.then((e) => {
