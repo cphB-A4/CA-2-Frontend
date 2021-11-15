@@ -15,7 +15,7 @@ import FetchSingle from "./FetchSingle";
 import NoMatch from "./NoMatch";
 
 function NoUserHeader(props) {
-  const { login, loggedIn } = props;
+  const { login, loggedIn, errorMsg } = props;
   const init = { username: "", password: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);
 
@@ -25,8 +25,13 @@ function NoUserHeader(props) {
     evt.preventDefault();
     login(loginCredentials.username, loginCredentials.password);
     //redirects user to home page
-    let path = `/`;
-    history.push(path);
+    console.log(errorMsg);
+    if (errorMsg == null) {
+      console.log("error msg if ? ");
+      let path = `/`;
+      history.push(path);
+    } else {
+    }
   };
   const onChange = (evt) => {
     setLoginCredentials({

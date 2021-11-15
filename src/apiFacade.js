@@ -85,7 +85,7 @@ function apiFacade() {
     if (body) {
       opts.body = JSON.stringify(body);
     }
-    console.log(opts);
+
     return opts;
   };
 

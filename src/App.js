@@ -47,13 +47,26 @@ import UserHeader from "./components/UserHeader";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const logout = () => {
     facade.logout();
     setLoggedIn(false);
   };
   const login = (user, pass) => {
-    facade.login(user, pass).then((res) => setLoggedIn(true));
+    facade
+      .login(user, pass)
+      .then((res) => setLoggedIn(true))
+      .catch((err) => {
+        if (err.status) {
+          err.fullError.then((e) => {
+            console.log(e.code + ": " + e.message);
+            setErrorMsg(e.code + ": " + e.message);
+          });
+        } else {
+          console.log("Network error");
+        }
+      });
   };
 
   //logedInState propdrilling ned til Header component. Lifting state up
@@ -62,7 +75,7 @@ function App() {
       {/* <Header loggedIn={loggedIn} /> */}
 
       {!loggedIn ? (
-        <NoUserHeader loggedIn={loggedIn} login={login} />
+        <NoUserHeader errorMsg={errorMsg} loggedIn={loggedIn} login={login} />
       ) : (
         <div>
           {/* <button onClick={logout}>Logout</button> */}
