@@ -5,10 +5,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter as Router } from "react-router-dom";
+import facade from "./apiFacade";
 
 ReactDOM.render(
   <Router>
-    <App />
+    <App 
+    facade = {facade}
+    />
   </Router>,
   document.getElementById("root")
 );

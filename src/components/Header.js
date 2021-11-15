@@ -1,18 +1,12 @@
-import { NavLink, Route } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function Header({ loggedIn, logout, validateAccess }) {
+function Header({ loggedIn, isAdmin }) {
   return (
     <ul className="header">
       {console.log(loggedIn)}
       <li>
         <NavLink exact activeClassName="active" to="/">
           Home
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink exact activeClassName="active" to="/fetch-single">
-          FetchSingle
         </NavLink>
       </li>
       {!loggedIn ? (
@@ -22,46 +16,38 @@ function Header({ loggedIn, logout, validateAccess }) {
               Login
             </NavLink>
           </li>
-          <li>
-            <NavLink exact activeClassName="active" to="/noUserHeader">
-              NoUserHeader
-            </NavLink>
-          </li>
         </div>
       ) : (
-        <>
-          {validateAccess === "user" ? (
-            <li>
-              <NavLink exact activeClassName="active" to="/fetch-sequentially">
-                Fetch sequentially
-              </NavLink>
-            </li>
+        <div>
+          {isAdmin ? (
+            <div>
+              <li>
+                <NavLink exact activeClassName="active" to="/fetchSequentially">
+                  FetchSequentially
+                </NavLink>
+              </li>
+              <li>
+                <NavLink exact activeClassName="active" to="/fetchParallelly">
+                  FetchParallelly
+                </NavLink>
+              </li>
+            </div>
           ) : (
-            ""
-          )}
-
-          {validateAccess === "admin" ? (
-            <li>
-              <NavLink exact activeClassName="active" to="/fetch-parallelly">
-                Fetch parallelly
-              </NavLink>
-            </li>
-          ) : (
-            ""
+            <div>
+              <li>
+                <NavLink exact activeClassName="active" to="/fetch-single">
+                  FetchSingle
+                </NavLink>
+              </li>
+            </div>
           )}
 
           <li>
-            {/*Logout is never active. Once you click you gets to the homepage*/}
-            <NavLink
-              exact
-              activeClassName="none"
-              to="/"
-              onClick={() => logout()}
-            >
+            <NavLink exact activeClassName="active" to="/logout">
               Logout
             </NavLink>
           </li>
-        </>
+        </div>
       )}
     </ul>
   );

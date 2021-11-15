@@ -1,9 +1,3 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Header from "./components/Header";
-import facade from "./apiFacade";
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -14,104 +8,60 @@ import {
   NavLink,
   useHistory,
 } from "react-router-dom";
+import "./App.css";
+import Header from "./components/Header";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import FetchSingle from "./components/FetchSingle";
-import NoUserHeader from "./components/NoUserHeader";
-import UserHeader from "./components/UserHeader";
+import FetchSequentially from "./components/FetchSequentially";
+import FetchParallelly from "./components/FetchParallelly";
 import NoMatch from "./components/NoMatch";
+import Logout from "./components/Logout.component";
+import jwt_decode from "jwt-decode";
 
-/*function LoggedIn() {
-  const [dataFromServer, setDataFromServer] = useState("Loading...");
-  const [errorMsg, setErrorMsg] = useState("All is good");
+function App(props) {
+  const { facade } = props;
 
-  useEffect(() => {
-    facade
-      .fetchData()
-      .then((data) => setDataFromServer(data.msg))
-      .catch((err) => {
-        if (err.status) {
-          err.fullError.then((e) => setErrorMsg(e.code + ": " + e.message));
-        } else {
-          console.log("Network error");
-        }
-      });
-  }, []);
-
-  return (
-    <div>
-      <h2>Data Received from server</h2>
-      <h3>{dataFromServer}</h3>
-      <p>{errorMsg}</p>
-    </div>
-  );
-}*/
-
-function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [homePage, setHomePage] = useState(false);
-  const [x, setX] = useState(false);
-  //const [msg, setMsg] = useState("");
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
-    let path = "";
-    console.log(errorMsg);
+    const token_encoded = facade.getToken();
+    console.log("Token encoded: ", token_encoded);
 
-    if (loggedIn) {
-      setHomePage(true);
-      //console.log("homePage is: ", homePage);
-      path = `/`;
-      history.push(path);
-      //setMsg("");
-    } else if (!loggedIn && !x) {
-      setHomePage(false);
-      path = `/`;
-      history.push(path);
-    } else {
-      setHomePage(false);
-      path = `/noUserHeader`;
-      history.push(path);
+    if (token_encoded !== null) {
+      const token = jwt_decode(token_encoded);
+      console.log("Token decoded: ", token);
+      if (token.roles === "admin") {
+        setIsAdmin(true);
+      }
     }
   }, [loggedIn]);
-
-  // useEffect(() => {
-  //   let path = "";
-  //   console.log(errorMsg);
-
-  //   //console.log("homePage is: ", homePage);
-
-  //   if (homePage) {
-  //     //console.log("homePage is: ", homePage);
-  //     path = `/`;
-  //     history.push(path);
-  //     //setMsg("");
-  //   } else {
-  //     //console.log("homePage is: ", homePage);
-  //     path = `/noUserHeader`;
-  //     history.push(path);
-  //     //setMsg("No Access...");
-  //   }
-  // }, [loginProcess]);
 
   const logout = () => {
     facade.logout();
     setLoggedIn(false);
+    setIsAdmin(false);
+    const path = `/`;
+    history.push(path);
   };
+
   const login = (user, pass) => {
     facade
       .login(user, pass)
       .then((res) => {
         setLoggedIn(true);
-        setX(true);
+        const path = `/`;
+        history.push(path);
       })
       .catch((err) => {
         if (err.status) {
           err.fullError.then((e) => {
             console.log(err.status + ": " + e.message);
-            setErrorMsg(err.status + ": " + e.message);
+            setErrorMsg("Error: " + e.message);
           });
         } else {
           console.log("Network error");
@@ -119,74 +69,32 @@ function App() {
       });
   };
 
-  //logedInState propdrilling ned til Header component. Lifting state up
   return (
     <div className="App">
-      {/* <Header loggedIn={loggedIn} /> */}
-      <Header loggedIn={loggedIn} />
-
-      {/* <UserHeader
-        validateAccess={facade.validateAccess()}
-        logout={logout}
-        loggedIn={loggedIn}
-      /> */}
-      {/* {!loggedIn ? (
-        <NoUserHeader
-          errorMsg={errorMsg}
-          loggedIn={loggedIn}
-          login={login}
-          homePage={homePage}
-          history={history}
-        />
-      ) : (
-        <div>
-          <UserHeader
-            validateAccess={facade.validateAccess()}
-            logout={logout}
-            loggedIn={loggedIn}
-          />
-          {}
-        </div>
-      )} */}
-      {/* <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/fetch-single">
-          <FetchSingle />
-        </Route>
-      </Switch> */}
+      <Header loggedIn={loggedIn} isAdmin={isAdmin} />
       <Switch>
         <Route exact path="/">
           <Home />
         </Route>
         <Route path="/login">
-          <Login homePage={homePage} history={history} />
-
-          {/* <div>
-            <h2>Login</h2>
-            <form onChange={onChange}>
-              <input placeholder="User Name" id="username" />
-              <input placeholder="Password" id="password" />
-              <button onClick={handleSubmit}>Login</button>
-            </form>
-            {msg === "" ? "" : <p>{msg}</p>}
-          </div> */}
+          <Login
+            errorMsg={errorMsg}
+            loggedIn={loggedIn}
+            login={login}
+            history={history}
+          />
         </Route>
         <Route path="/fetch-single">
           <FetchSingle />
         </Route>
-        <Route path="/noUserHeader">
-          <NoUserHeader
-            errorMsg={errorMsg}
-            loggedIn={loggedIn}
-            login={login}
-            homePage={homePage}
-            history={history}
-          />
+        <Route path="/fetchSequentially">
+          <FetchSequentially />
+        </Route>
+        <Route path="/fetchParallelly">
+          <FetchParallelly />
+        </Route>
+        <Route path="/logout">
+          <Logout logout={logout} />
         </Route>
         <Route path="*">
           <NoMatch />
