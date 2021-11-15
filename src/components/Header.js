@@ -16,11 +16,18 @@ function Header({ loggedIn, logout, validateAccess }) {
         </NavLink>
       </li>
       {!loggedIn ? (
-        <li>
-          <NavLink exact activeClassName="active" to="/login">
-            Login
-          </NavLink>
-        </li>
+        <div>
+          <li>
+            <NavLink exact activeClassName="active" to="/login">
+              Login
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact activeClassName="active" to="/noUserHeader">
+              NoUserHeader
+            </NavLink>
+          </li>
+        </div>
       ) : (
         <>
           {validateAccess === "user" ? (

@@ -15,19 +15,41 @@ import FetchSingle from "./FetchSingle";
 import NoMatch from "./NoMatch";
 
 function NoUserHeader(props) {
-  const { login, loggedIn } = props;
+  const { login, loggedIn, errorMsg, homePage, history } = props;
   const init = { username: "", password: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);
-
-  const history = useHistory();
+  const [msg, setMsg] = useState("");
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     login(loginCredentials.username, loginCredentials.password);
+    // let path = "";
+    // console.log(errorMsg);
+
+    // //console.log("homePage is: ", homePage);
+
+    // if (homePage) {
+    //   //console.log("homePage is: ", homePage);
+    //   path = `/`;
+    //   history.push(path);
+    //   //setMsg("");
+    // } else {
+    //   //console.log("homePage is: ", homePage);
+    //   path = `/login`;
+    //   history.push(path);
+    //   //setMsg("No Access...");
+    // }
+
+    // if (errorMsg === "" || errorMsg === undefined) {
+    //   path = `/`;
+    //   history.push(path);
+    // } else {
+    //   console.log(history);
+    // }
+    // console.log(errorMsg);
     //redirects user to home page
-    let path = `/`;
-    history.push(path);
   };
+
   const onChange = (evt) => {
     setLoginCredentials({
       ...loginCredentials,
@@ -36,9 +58,19 @@ function NoUserHeader(props) {
   };
   return (
     <div>
+      {console.log("homePage is: ", homePage)}
       NoUserHeader
-      <Header loggedIn={loggedIn} />
-      <Switch>
+      {/* <Header loggedIn={loggedIn} /> */}
+      <div>
+        <h2>Login</h2>
+        <form onChange={onChange}>
+          <input placeholder="User Name" id="username" />
+          <input placeholder="Password" id="password" />
+          <button onClick={handleSubmit}>Login</button>
+        </form>
+        {msg === "" ? "" : <p>{msg}</p>}
+      </div>
+      {/* <Switch>
         <Route exact path="/">
           <Home />
         </Route>
@@ -50,6 +82,7 @@ function NoUserHeader(props) {
               <input placeholder="Password" id="password" />
               <button onClick={handleSubmit}>Login</button>
             </form>
+            {msg === "" ? "" : <p>{msg}</p>}
           </div>
         </Route>
         <Route path="/fetch-single">
@@ -58,7 +91,7 @@ function NoUserHeader(props) {
         <Route path="*">
           <NoMatch />
         </Route>
-      </Switch>
+      </Switch> */}
     </div>
   );
 }
