@@ -1,6 +1,6 @@
 import { NavLink, Route } from "react-router-dom";
 
-function Header({ loggedIn, logout }) {
+function Header({ loggedIn, logout, validateAccess }) {
   return (
     <ul className="header">
       {console.log(loggedIn)}
@@ -23,16 +23,26 @@ function Header({ loggedIn, logout }) {
         </li>
       ) : (
         <>
-          <li>
-            <NavLink exact activeClassName="active" to="/fetch-sequentially">
-              Fetch sequentially
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact activeClassName="active" to="/fetch-parallelly">
-              Fetch parallelly
-            </NavLink>
-          </li>
+          {validateAccess === "user" ? (
+            <li>
+              <NavLink exact activeClassName="active" to="/fetch-sequentially">
+                Fetch sequentially
+              </NavLink>
+            </li>
+          ) : (
+            ""
+          )}
+
+          {validateAccess === "admin" ? (
+            <li>
+              <NavLink exact activeClassName="active" to="/fetch-parallelly">
+                Fetch parallelly
+              </NavLink>
+            </li>
+          ) : (
+            ""
+          )}
+
           <li>
             {/*Logout is never active. Once you click you gets to the homepage*/}
             <NavLink

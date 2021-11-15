@@ -66,7 +66,12 @@ function App() {
       ) : (
         <div>
           {/* <button onClick={logout}>Logout</button> */}
-          <UserHeader logout={logout} loggedIn={loggedIn} />
+          <UserHeader
+            validateAccess={facade.validateAccess()}
+            logout={logout}
+            loggedIn={loggedIn}
+          />
+          {}
         </div>
       )}
       {/* <Switch>

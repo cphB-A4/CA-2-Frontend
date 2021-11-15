@@ -1,5 +1,7 @@
-const URL = "https://www.theagns.com/CA2-Backend";
+import jwt_decode from "jwt-decode";
+import { URL } from "./Settings";
 
+//URL = "https://www.theagns.com/CA2-Backend";
 function handleHttpErrors(res) {
   if (!res.ok) {
     return Promise.reject({ status: res.status, fullError: res.json() });
@@ -16,6 +18,17 @@ function apiFacade() {
   const getToken = () => {
     return localStorage.getItem("jwtToken");
   };
+
+  //Decode token
+
+  const validateAccess = () => {
+    var decoded = jwt_decode(getToken());
+    const { roles } = decoded;
+    console.log(roles);
+    //  console.log(decoded);
+    return roles;
+  };
+
   const loggedIn = () => {
     const loggedIn = getToken() != null;
     return loggedIn;
@@ -72,8 +85,10 @@ function apiFacade() {
     if (body) {
       opts.body = JSON.stringify(body);
     }
+    console.log(opts);
     return opts;
   };
+
   return {
     makeOptions,
     setToken,
@@ -85,6 +100,7 @@ function apiFacade() {
     fetchSingleData,
     fetchAlotData,
     fetchAlotDataParallel,
+    validateAccess,
   };
 }
 const facade = apiFacade();

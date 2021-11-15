@@ -12,6 +12,7 @@ import React, { useState, useEffect } from "react";
 import Home from "./Home";
 import Header from "./Header";
 import FetchSingle from "./FetchSingle";
+import NoMatch from "./NoMatch";
 
 function NoUserHeader(props) {
   const { login, loggedIn } = props;
@@ -53,6 +54,9 @@ function NoUserHeader(props) {
         </Route>
         <Route path="/fetch-single">
           <FetchSingle />
+        </Route>
+        <Route path="*">
+          <NoMatch />
         </Route>
       </Switch>
     </div>

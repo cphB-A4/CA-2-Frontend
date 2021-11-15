@@ -14,12 +14,17 @@ import FetchSingle from "./FetchSingle";
 import FetchSequentially from "./FetchSequentially";
 import FetchParallel from "./FetchParallelly";
 import FetchParallelly from "./FetchParallelly";
+import NoMatch from "./NoMatch";
 
 function UserHeader(props) {
-  const { loggedIn, logout } = props;
+  const { loggedIn, logout, validateAccess } = props;
   return (
     <div>
-      <Header logout={logout} loggedIn={loggedIn} />
+      <Header
+        validateAccess={validateAccess}
+        logout={logout}
+        loggedIn={loggedIn}
+      />
       <Switch>
         <Route exact path="/">
           <Home />
@@ -27,11 +32,23 @@ function UserHeader(props) {
         <Route path="/fetch-single">
           <FetchSingle />
         </Route>
-        <Route path="/fetch-sequentially">
-          <FetchSequentially />
-        </Route>
-        <Route path="/fetch-parallelly">
-          <FetchParallelly />
+
+        {validateAccess === "user" ? (
+          <Route path="/fetch-sequentially">
+            <FetchSequentially />
+          </Route>
+        ) : (
+          ""
+        )}
+        {validateAccess === "admin" ? (
+          <Route path="/fetch-parallelly">
+            <FetchParallelly />
+          </Route>
+        ) : (
+          ""
+        )}
+        <Route path="*">
+          <NoMatch />
         </Route>
       </Switch>
     </div>
