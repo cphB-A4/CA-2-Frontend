@@ -59,6 +59,7 @@ function App() {
     facade
       .login(user, pass)
       .then((res) => {
+        //If user login succesfully it redirects to homepage
         setLoggedIn(true);
         setErrorMsg("");
         const path = `/`;

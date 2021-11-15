@@ -22,11 +22,9 @@ function FetchSingle() {
     <div>
       <Container>
         <Row className="rows">
-          <Col xs={2} className="columns">
-            1 of 3
-          </Col>
+          <Col xs={2} className="columns"></Col>
           <Col className="columns text-center">
-            <h1 className="text-center">Get random cat fact API!</h1>
+            <h1 className="text-center mt-3">Get random cat fact API!</h1>
             <br></br>
             <h5>{data.fact}</h5>
             <p>Length of fact: {data.length}</p>
@@ -35,9 +33,7 @@ function FetchSingle() {
               Click me
             </button>
           </Col>
-          <Col xs={2} className="columns">
-            3 of 3
-          </Col>
+          <Col xs={2} className="columns"></Col>
         </Row>
       </Container>
     </div>

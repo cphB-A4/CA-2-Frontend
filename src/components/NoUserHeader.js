@@ -34,7 +34,6 @@ function NoUserHeader(props) {
   };
   return (
     <div>
-      NoUserHeader
       {console.log(errorMsg)}
       <Header loggedIn={loggedIn} />
       <Switch>

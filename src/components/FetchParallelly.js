@@ -21,11 +21,9 @@ function FetchParallelly() {
     <div>
       <Container>
         <Row className="rows">
-          <Col xs={2} className="columns">
-            1 of 3
-          </Col>
+          <Col xs={2} className="columns"></Col>
           <Col className="columns text-center">
-            <h1 className="text-center">
+            <h1 className="text-center mt-3">
               Get a lot of random Facts from 4 API's parallelly!
             </h1>
             <br></br>
@@ -34,9 +32,7 @@ function FetchParallelly() {
               Click me
             </button>
           </Col>
-          <Col xs={2} className="columns">
-            3 of 3
-          </Col>
+          <Col xs={2} className="columns"></Col>
         </Row>
         {/* <p className="text-center mt-3">{data.boredomDTO.activity}</p>
         <p className="text-center">
