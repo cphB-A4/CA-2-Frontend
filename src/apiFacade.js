@@ -9,6 +9,14 @@ function handleHttpErrors(res) {
   return res.json();
 }
 
+function handleError(error, setError) {
+  if (error.status) {
+    error.fullError.then((data) => setError(data));
+  } else {
+    setError({ code: 500, message: "Some unknown error happened" });
+  }
+}
+
 function apiFacade() {
   /* Insert utility-methods from a latter step (d) here (REMEMBER to uncomment in the returned object when you do)*/
 
@@ -101,6 +109,7 @@ function apiFacade() {
     fetchAlotData,
     fetchAlotDataParallel,
     validateAccess,
+    handleError,
   };
 }
 const facade = apiFacade();

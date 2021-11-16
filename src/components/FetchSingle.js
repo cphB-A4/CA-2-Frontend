@@ -1,16 +1,21 @@
 import facade from "../apiFacade";
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import ErrorToDisplay from "./ErrorToDisplay";
 
 function FetchSingle() {
   //const intialValue = { fact: "", length: "" };
   const [data, setData] = useState({});
+  const [error, setError] = useState();
 
   const getRandomCatFact = () => {
-    facade.fetchSingleData().then((json) => {
-      console.log(json);
-      setData(json);
-    });
+    facade
+      .fetchSingleData()
+      .then((json) => {
+        console.log(json);
+        setData(json);
+      })
+      .catch((error) => facade.handleError(error, setError));
   };
 
   //If you want a catFact right away uncomment this code:
@@ -35,6 +40,9 @@ function FetchSingle() {
           </Col>
           <Col xs={2} className="columns"></Col>
         </Row>
+        {error && (
+          <ErrorToDisplay errorMsg={error.message} errorCode={error.code} />
+        )}
       </Container>
     </div>
   );

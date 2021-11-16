@@ -1,16 +1,24 @@
 import facade from "../apiFacade";
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import ErrorToDisplay from "./ErrorToDisplay";
 
 function FetchParallelly() {
   //const intialValue = { fact: "", length: "" };
   const [data, setData] = useState({});
+  const [error, setError] = useState();
 
   const getAlotData = () => {
-    facade.fetchAlotDataParallel().then((json) => {
-      console.log(json);
-      setData(json);
-    });
+    facade
+      .fetchAlotDataParallel()
+      .then((json) => {
+        console.log(json);
+        setData(json);
+        //test catch method
+        if (!json.ok) throw new Error(json.status);
+        else return json.json();
+      })
+      .catch((error) => facade.handleError(error, setError));
   };
 
   //If you want a catFact right away uncomment this code:
@@ -39,6 +47,9 @@ function FetchParallelly() {
           participants: {data.boredomDTO.participants}
         </p>
         <p className="text-center">{data.boredomDTO.type}</p> */}
+        {error && (
+          <ErrorToDisplay errorMsg={error.message} errorCode={error.code} />
+        )}
       </Container>
       {JSON.stringify(data)}
     </div>
